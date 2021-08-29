@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Calculo IMC</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='../css/main.css'>
+  <script src='main.js'></script>
+  <link rel="shortcut icon" href="icone.png">
+</head>
+
+<body>
+  <!-- Div pai para fazer o controle de posicionamento geral da página-->
+  <div id="container">
+    <h1>Calculadora de IMC</h1>
+    <div id="form-wrapper">
+      <form id="form-imc">
+        <div class="input-container">
+          <input class="input" type="text" placeholder="Ex: Leonardo Souza" name="name" id="name" maxlength="20">
+        </div>
+
+        <div class="input-container">
+          <input class="input" type="text" placeholder="Ex: 1,74" id="height" maxlength="4">
+        </div>
+
+        <div class="input-container">
+          <input class="input" type="text" name="weight" placeholder="Ex: 74" id="weight" maxlength="6">
+        </div>
+
+        <div id="button-container">
+          <button class="button" type="submit">CALCULAR</button>
+        </div>
+      </form>
+    </div>
+    <div id="info-container">
+      <h1><span id="show-name"></span></h1><br>
+      <h3 id="strong-imc">*Para calcular o IMC (Índice de Massa Corporal), basta preencher os campos acima.</h3>
+    </div>
+  </div>
+
+  <!--Table--->
+  <div id="table-container">
+    <table>
+      <thead>
+        <h1>Interpretação do IMC</h1>
+      </thead>
+      <tr>
+        <td>IMC</td>
+        <td>CLASSIFICAÇÃO</td>
+        <td>OBESIDADE (GRAU)</td>
+      </tr>
+      <tr>
+        <td>MENOR QUE 18,5</td>
+        <td>MAGREZA</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>ENTRE 18,5 E 24,9</td>
+        <td>NORMAL</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>ENTRE 25,0 E 29,9</td>
+        <td>SOBREPESO</td>
+        <td>I</td>
+      </tr>
+      <tr>
+        <td>ENTRE 30,0 E 99,9</td>
+        <td>OBESIDADE</td>
+        <td>II</td>
+      </tr>
+      <tr>
+        <td>ENTRE 40,0</td>
+        <td>OBESIDADE GRAVE</td>
+        <td>III</td>
+      </tr>
+    </table>
+  </div>
+
+
+  <script>
+    const form = document.querySelector("#form-imc")
+    form.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const verification = verify_fields();
+
+      if (verification) return alert(verification.message)
+
+      // Agora vamos fazer o seguinte, precisamos capturar os valores de cada input.
+      // Sabemos que temos 2 tipos diferentes de inputs
+      // 1 input de texto: Nome
+      // 2 inputs numéricos: Altura e Peso.
+      // Para esse código não ficar gigante, vamos separar as responsabilidades.
+
+      // Estou usando as funções que eu criei para capturar os valores que eu quero
+      // Vamos ver o que acontece quando a gente seta um valor lá no HTML e exibe eles.
+
+      const name = getInputTextValue("#name")
+      const weight = getInputNumberValue("#weight")
+      const height = getInputNumberValue("#height")
+
+      // Está feito, você capturou os 3 inputs que você desejava :D
+      // Agora é manipular esses valores da forma que você precisa pra chegar no valor que você deseja.
+      // Se liga que massa agora:
+
+      const nameText = document.querySelector("#show-name");
+
+
+      nameText.innerText = `Olá ${name}!`;
+      // Capturei aqui a referência do elemento
+      const strongImc = document.querySelector("#strong-imc");
+
+      const imc = calculateIMC(height, weight)
+
+      // Setei o valor com o meu IMC
+
+      strongImc.innerHTML = ` O SEU IMC É: ${imc.toFixed(2)}`
+      clear_fields();
+    })
+
+    function change_button_name() {
+
+      
+    }
+
+    function getFields() {
+      const name = document.querySelector("#name")
+      const height = document.querySelector("#height")
+      const weight = document.querySelector("#weight")
+
+
+      return {
+        name,
+        height,
+        weight
+      }
+
+    }
+
+
+    function verify_fields() {// Verifica se esta em branco
+      const { name, height, weight } = getFields()
+
+      const nameValue = name.value
+      const heightValue = height.value
+      const weightValue = weight.value
+
+      if (nameValue === '') {
+        return {
+          message: 'Por favor, preencha o campo nome'
+        }
+      }
+      if (heightValue === '') {
+        return {
+          message: 'Por favor, preencha o campo altura'
+        }
+      }
+      if (weightValue === '') {
+        return {
+          message: 'Por favor, preencha o campo peso'
+        }
+      }
+
+      return false;
+
+    }
+
+    function clear_fields() { // Limpa o campo
+      document.getElementById('name').value = '';
+      document.getElementById('weight').value = '';
+      document.getElementById('height').value = '';
+    }
+
+    function calculateIMC(height, weight) {
+      return weight / (height * height)
+    }
+
+    function getInputTextValue(id) {
+      // Eu estou separando a responsabilidade de fazer a seleção do elemento lá do HTML, eu quero puxar somente o valor
+      // dele, não a referência dele na DOM. Então essa função só vai me retornar o valor do input que eu desejo.
+      return document.querySelector(id).value
+    }
+
+    function getInputNumberValue(id) {
+      // Mesma coisa aqui, a diferença é que:
+      // Todo o input, seja o tipo que for, ele retornará pra gente um valor do tipo string
+      // Mas para fazer um cálculo IMC, não conseguimos calcular duas strings, precisamos
+      // de variáveis do tipo númerico, então está acontecendo isso aqui.
+      // Eu recebo o valor do meu input, e estou transformando ele de um valor string para numérico :)
+      const value = document.querySelector(id).value
+      return parseFloat(value.replace(",", "."))
+    }
+
+  </script>
+</body>
