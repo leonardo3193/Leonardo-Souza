@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../scripts/script.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/elements.css" media="screen" />
+    <link rel="shortcut icon" href="../ico/logo.png">
+    <title>Formulário do Cliente </title>
+</head>
+
+<body>
+    <div id="container">
+        <div id="form-wrapper">
+            <div id="background_form">
+                <p>
+                <div id="form_border">
+
+                    <p><label id="border-title"><b>Baixe Agora<b></label></p>
+                    <p><label id="sub-title"><i>A Plus com mais de 20 anos de experiência no mercado imobiliário
+                     está com esse incrível E-Book para te ajudar a encontrar o seu apartamento dos sonhos.</i>
+                    </label></p>
+
+                    <p>
+                    <div class="inputs">
+                        <input class="input" type="text" placeholder="Nome Completo" name="name" id="name"
+                            maxlength="50">
+                    </div>
+                    </p>
+
+                    <p>
+                    <div class="inputs">
+                        <input class="input" type="number" placeholder="(xx)xxxx-xxxx" telefone="phone_number"
+                            id="phone_number" maxlength="13">
+                    </div>
+                    </p>
+
+                    <p>
+                    <div class="inputs">
+                        <input class="input" type="mail" placeholder="***********@gmail.com" email="mail" id="mail"
+                            maxlength="50">
+                    </div>
+                    </p>
+
+                    <p>
+                    <div>
+                        <input type="checkbox" id="check" name="check" unchecked>
+                        <label for="check"><i>Ao informar meus dados, eu concordo com a
+                            Política de Privacidade e com os Termos de Uso.</i>></label>
+                    </div>
+                    </p>
+                    <p>
+                    <div id="button-container">
+                        <button class="button" onclick="sending()">Baixar E-Book</button>
+                    </div>
+                    </p>
+
+                    <p><label id="absolute_secrecy"><i>*Prometemos não utilizar suas informações de contato para enviar
+                            qualquer tipo de SPAM.</i></label></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </p>
+</body>
+
+</html>
