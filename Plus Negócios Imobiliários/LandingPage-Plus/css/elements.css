@@ -83,6 +83,8 @@ body{
 #created{
   color: aliceblue;
   font-size: 12px;
+  text-shadow: 0 0 0.2em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0),
+  0 0 0.2em rgb(0, 0, 0)
 }
 
 .button:hover {
