@@ -9,11 +9,11 @@ const User = require('./models/User'); // Include "User Table" to database
 
 app.use(express.json()); // prepare to receive JSON formart
 
-app.get("/", async (requisition. answer) => {
+app.get("/", async (requisition, answer) => {
   answer.send("Home Page");
 });
 
-app.post("/register", async (requisition. answer) => {
+app.post("/register", async (requisition, answer) => {
   console.log(requisition.body);
 
   /*registration verification DATABASE*/
