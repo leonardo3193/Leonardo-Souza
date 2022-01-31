@@ -9,7 +9,7 @@ const User = require('./models/User'); // Include "User Table" to database
 
 app.use(express.json()); // prepare to receive JSON formart
 
-app.get("/", async (requisition, answer) => {
+app.get("/", async (requisition. answer) => {
   answer.send("Home Page");
 });
 
