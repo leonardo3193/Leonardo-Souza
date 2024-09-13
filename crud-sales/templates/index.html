@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0044cc;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #0044cc;
+            color: #fff;
+        }
+        .button {
+            background-color: #0044cc;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #0033aa;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciar Produtos</h1>
+        <form action="/create" method="post">
+            <div class="form-group">
+                <label for="nome_produto">Nome do Produto:</label>
+                <input type="text" id="nome_produto" name="nome_produto" placeholder="Digite o nome do produto" required>
+            </div>
+            <div class="form-group">
+                <label for="valor">Valor:</label>
+                <input type="number" id="valor" name="valor" placeholder="Digite o valor do produto" required>
+            </div>
+            <button class="button" type="submit">Adicionar Produto</button>
+        </form>
+
+        <h2>Lista de Produtos</h2>
+        <table id="tabelaProdutos">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venda in vendas %}
+                <tr>
+                    <td>{{ venda['nome_produto'] }}</td>
+                    <td>{{ venda['valor'] }}</td>
+                    <td>
+                        <form action="/update" method="post" style="display:inline;">
+                            <input type="hidden" name="nome_produto" value="{{ venda['nome_produto'] }}">
+                            <input type="number" name="valor" value="{{ venda['valor'] }}" required>
+                            <button class="button" type="submit">Atualizar</button>
+                        </form>
+                        <form action="/delete" method="post" style="display:inline;">
+                            <input type="hidden" name="nome_produto" value="{{ venda['nome_produto'] }}">
+                            <button class="button" type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
