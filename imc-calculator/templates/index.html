@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de IMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function calcularIMC(event) {
+            event.preventDefault(); // Impede o envio do formulário
+
+            const nome = document.getElementById('nome').value;
+            const altura = parseFloat(document.getElementById('altura').value);
+            const peso = parseFloat(document.getElementById('peso').value);
+
+            if (!nome || isNaN(altura) || isNaN(peso)) {
+                alert('Por favor, preencha todos os campos corretamente.');
+                return;
+            }
+
+            const imc = peso / (altura * altura);
+            let categoria = '';
+
+            if (imc < 18.5) {
+                categoria = 'Magreza (Grau 0)';
+            } else if (imc <= 24.9) {
+                categoria = 'Normal (Grau 0)';
+            } else if (imc <= 29.9) {
+                categoria = 'Sobrepeso (Grau I)';
+            } else if (imc <= 39.9) {
+                categoria = 'Obesidade (Grau II)';
+            } else {
+                categoria = 'Obesidade Grave (Grau III)';
+            }
+
+            const resultado = `${nome}, seu IMC é ${imc.toFixed(2)} (${categoria})`;
+
+            document.getElementById('resultado-texto').textContent = resultado;
+            document.getElementById('resultado-modal').style.display = 'block';
+        }
+
+        function fecharModal() {
+            document.getElementById('resultado-modal').style.display = 'none';
+            document.getElementById('imc-form').reset();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Cálculo do IMC</h2>
+        <form id="imc-form" onsubmit="calcularIMC(event)">
+            <label for="nome">Nome:</label><br>
+            <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required><br>
+
+            <label for="altura">Altura (em metros):</label><br>
+            <input type="number" id="altura" name="altura" step="0.01" placeholder="Ex: 1.75" required><br>
+
+            <label for="peso">Peso (em kg):</label><br>
+            <input type="number" id="peso" name="peso" step="0.1" placeholder="Ex: 70.5" required><br>
+
+            <input type="submit" value="Calcular IMC">
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div id="resultado-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <p id="resultado-texto"></p>
+            <button onclick="fecharModal()">OK</button>
+        </div>
+    </div>
+</body>
+</html>
